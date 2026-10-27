@@ -238,7 +238,25 @@ row.appendChild(hint);
 // Add the completed row to the playlist
 container.appendChild(row);
 
-  // Step 9 code will go here
+  // Listen for a click on the song row
+row.addEventListener("click", function () {
+
+  // Trigger the removal animation
+  row.classList.add("removing");
+
+  // Wait for the animation before removing
+  setTimeout(function () {
+    row.remove();
+
+    // Increase the removed songs counter
+    songsRemovedCount++;
+
+    // Check for a milestone
+    updateMilestone();
+
+  }, 200);
+
+});
 });
 
 
