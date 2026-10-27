@@ -74,6 +74,7 @@ function buildPlaylist() {
   // ===================================================== //
 
   /* =====================================================
+  
      DEV TEAMS — STEP 5: Listening Mode Logic
      (Your instructor didn't demo this one live — here's
      everything you need to figure it out as a team.)
@@ -119,7 +120,14 @@ function buildPlaylist() {
         the mode
      ===================================================== */
 
+const mode = modeSelector.value;
+let songs;
 
+if (mode === "quickPlay") {
+  songs = playlistData[mood].slice(0, 3);
+} else if (mode === "fullSession") {
+  songs = playlistData[mood];
+}
 
   /* =====================================================
      DEV TEAMS — STEP 6: Conditional Feedback
@@ -164,7 +172,21 @@ function buildPlaylist() {
 
      YOUR CODE GOES HERE:
      ===================================================== */
+// Clear the previous playlist
+container.innerHTML = "";
 
+// Reset the milestone counter
+songsRemovedCount = 0;
+milestone.textContent = "";
+
+// Check whether songs were found
+if (songs.length === 0) {
+  feedback.textContent = "No songs found!";
+  feedback.className = "feedback-box error";
+} else {
+  feedback.textContent = `${songs.length} songs loaded! Enjoy your playlist!`;
+  feedback.className = "feedback-box success";
+}
 
 
   /* =====================================================
@@ -181,7 +203,43 @@ function buildPlaylist() {
 
      YOUR CODE GOES HERE:
      ===================================================== */
+songs.forEach((song, index) => {
+  console.log(index, song.title);
 
+  // Create the song row
+const row = document.createElement("div");
+row.className = "song-row";
+
+// Create the album cover
+const img = document.createElement("img");
+img.src = song.cover;
+img.alt = song.title;
+
+// Use a fallback if the image fails to load
+img.onerror = function () {
+  this.onerror = null;
+  this.src = "https://placehold.co/60x60?text=Music";
+};
+
+// Create the song title
+const title = document.createElement("span");
+title.textContent = song.title;
+
+// Create the removal hint
+const hint = document.createElement("span");
+hint.className = "remove-hint";
+hint.textContent = "click to remove";
+
+// Assemble the song row
+row.appendChild(img);
+row.appendChild(title);
+row.appendChild(hint);
+
+// Add the completed row to the playlist
+container.appendChild(row);
+
+  // Step 9 code will go here
+});
 
 
     /* =====================================================
